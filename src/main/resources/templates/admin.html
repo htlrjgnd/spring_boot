@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin page</title>
+</head>
+<body>
+<h1 th:text="${user}"></h1>
+<h1>Users list</h1>
+<div>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Change</th>
+            <th>Delete</th>
+        </tr>
+        <tr th:each ="_user : ${users}">
+            <td th:utext="${_user.id}"></td>
+            <td th:utext="${_user.username}"></td>
+            <td th:utext="${_user.roles}"></td>
+            <td>
+                <form th:action="@{{id}/change(id=${_user.id})}">
+                    <input type="submit" value="CHANGE"/>
+                </form>
+            </td>
+            <td>
+                <form th:method="delete" th:action="@{{id}(id=${_user.id})}">
+                    <input type="submit" value="DELETE"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+<br/>
+<form th:action="@{add}"><input type="submit" value="ADD"/></form>
+<br/>
+<form th:action="@{logout}"><input type="submit" value="LOGOUT"/></form>
+</body>
+</html>
