@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>User page</title>
@@ -11,7 +11,7 @@
     <input type="text" th:field="*{username}" id="name">
     <br/>
     <label for="pass">Password</label>
-    <input type="text" th:field="*{password}" id="pass">
+    <input type="password" th:field="*{password}" id="pass">
     <br/>
     <input type="submit" value="Change"/>
 </form>

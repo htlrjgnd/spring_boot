@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Add user</title>
@@ -13,7 +12,7 @@
     <br/>
     <label>Password</label>
     <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-    <input type="text" th:field="*{password}">
+    <input type="password" th:field="*{password}">
     <br/>
 
     <p>

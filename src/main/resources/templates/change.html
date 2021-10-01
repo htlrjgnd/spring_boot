@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Change</title>
@@ -12,7 +11,7 @@
     <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
     <br/>
     <label for="pass">Password</label>
-    <input type="text" th:field="*{password}" id="pass">
+    <input type="password" th:field="*{password}" id="pass">
     <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
     <br/>
     <p>

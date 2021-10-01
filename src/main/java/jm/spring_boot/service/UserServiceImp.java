@@ -5,6 +5,7 @@ import jm.spring_boot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,15 +16,21 @@ import java.util.List;
 public class UserServiceImp implements UserService {
 
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImp(UserRepository userRepository) {
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
     public User addUser(User user) {
-        return userRepository.saveAndFlush(user);
+        return userRepository.save(userDtoInUser(user));
     }
 
     @Override
@@ -33,7 +40,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void save(User user) {
-        userRepository.save(user);
+        userRepository.save(userDtoInUser(user));
     }
 
     @Override
@@ -43,7 +50,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public User findById(Long id) {
-        return userRepository.findById(id).get();
+        return userRepository.findById(id).orElseThrow(() -> new NullPointerException("user with " + id + " not found"));
     }
 
     @Override
@@ -53,6 +60,15 @@ public class UserServiceImp implements UserService {
             throw new UsernameNotFoundException(username);
         }
         user.getAuthorities();
+        return user;
+    }
+
+    private User userDtoInUser(User userDto) {
+        User user = new User();
+        user.setId(userDto.getId());
+        user.setUsername(userDto.getUsername());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setRoles(userDto.getRoles());
         return user;
     }
 }
