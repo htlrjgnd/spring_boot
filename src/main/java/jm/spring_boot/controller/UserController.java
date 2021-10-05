@@ -53,7 +53,7 @@ public class UserController {
     @PutMapping("/user/{id}")
     public String changeUser(@ModelAttribute("user") User user) {
         user.setRoles(getUser().getRoles());
-        userService.save(user);
+        userService.update(user);
         return "user";
     }
 
@@ -106,7 +106,7 @@ public class UserController {
             return "redirect:/" + user.getId() + "/change";
         }
         user.setRoles(addRolesUser(list));
-        userService.addUser(user);
+        userService.update(user);
         return "redirect:/admin";
     }
 

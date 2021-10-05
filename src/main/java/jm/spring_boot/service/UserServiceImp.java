@@ -30,7 +30,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public User addUser(User user) {
-        return userRepository.save(userDtoInUser(user));
+        return userRepository.saveAndFlush(userDtoInUser(user));
     }
 
     @Override
@@ -39,8 +39,8 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void save(User user) {
-        userRepository.save(userDtoInUser(user));
+    public void update(User user) {
+        userRepository.save(user);
     }
 
     @Override
