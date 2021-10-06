@@ -30,7 +30,8 @@ public class UserServiceImp implements UserService {
 
     @Override
     public User addUser(User user) {
-        return userRepository.saveAndFlush(userDtoInUser(user));
+        setEncoderPass(user);
+        return userRepository.saveAndFlush(user);
     }
 
     @Override
@@ -40,6 +41,9 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void update(User user) {
+        if(!user.getPassword().equals(findById(user.getId()).getPassword())){
+            setEncoderPass(user);
+        }
         userRepository.save(user);
     }
 
@@ -63,12 +67,7 @@ public class UserServiceImp implements UserService {
         return user;
     }
 
-    private User userDtoInUser(User userDto) {
-        User user = new User();
-        user.setId(userDto.getId());
-        user.setUsername(userDto.getUsername());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setRoles(userDto.getRoles());
-        return user;
+    private void setEncoderPass(User user) {
+       user.setPassword(passwordEncoder.encode(user.getPassword()));
     }
 }
